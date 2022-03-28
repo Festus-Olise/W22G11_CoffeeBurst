@@ -13,4 +13,11 @@
     <string name="re_type_password">Re-type Password</string>
     <string name="your_name">Full Name</string>
     <string name="txtViewItemTitle">TitlePlaceholder</string>
+    <string name="TextViewChooseSize">Please choose the size of your drink</string>
+    <string name="BtnTextAddToCart">Add to cart</string>
+    <string name="TextViewSizeLarge">Large</string>
+    <string name="TextViewSizeMedium">Medium</string>
+    <string name="TextViewSizeSmall">Small</string>
+    <string name="CoffeeDepartment">Coffee</string>
+    <string name="TeaDepartment">Tea</string>
 </resources>
