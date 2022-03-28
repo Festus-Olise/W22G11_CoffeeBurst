@@ -5,8 +5,11 @@
       <map>
         <entry key="app/src/main/res/layout/activity_display_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/card_layout.xml" value="0.10562310030395136" />
+        <entry key="app/src/main/res/layout/catalog_layout.xml" value="0.10005065856129686" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1503623188405797" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.1503623188405797" />
+        <entry key="app/src/main/res/layout/product_card_layout.xml" value="0.335" />
       </map>
     </option>
   </component>
