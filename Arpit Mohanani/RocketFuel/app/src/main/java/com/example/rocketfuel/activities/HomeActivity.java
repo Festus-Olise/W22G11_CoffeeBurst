@@ -1,4 +1,4 @@
-package com.example.rocketfuel;
+package com.example.rocketfuel.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.rocketfuel.R;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -52,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
         }else if(signInType.toLowerCase().equals("Google".toLowerCase())){
             GoogleSignOutSetup();
             fullName.setText(("Full Name: " + googleSignInAccount.getDisplayName()));
+        }else if(signInType.toLowerCase().equals("Local".toLowerCase())){
+            fullName.setText(("Full Name: " + getIntent().getExtras().getString("FULLNAME","Empty")));
         }
 
         signOutBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
                     finish();
                 }else if(signInType.toLowerCase().equals("Google".toLowerCase())){
                     googleSignInClient.signOut();
+                    startActivity(new Intent(HomeActivity.this, SignInPage.class));
+                    finish();
+                }else if(signInType.toLowerCase().equals("Local".toLowerCase())){
                     startActivity(new Intent(HomeActivity.this, SignInPage.class));
                     finish();
                 }

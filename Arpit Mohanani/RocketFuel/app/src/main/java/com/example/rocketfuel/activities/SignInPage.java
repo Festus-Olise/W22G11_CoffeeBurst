@@ -1,18 +1,25 @@
-package com.example.rocketfuel;
+package com.example.rocketfuel.activities;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.rocketfuel.R;
+import com.example.rocketfuel.databases.LoginDetailsDatabase;
+import com.example.rocketfuel.interfaces.LoginDetailsDao;
+import com.example.rocketfuel.model.LoginDetails;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -28,12 +35,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SignInPage extends AppCompatActivity {
 
     ImageView signBtnGoogle;
     ImageView signBtnFacebook;
     MaterialButton btnSignUp;
+    MaterialButton btnLogin;
+    EditText editTextUsername;
+    EditText editTextPassword;
 
     CallbackManager callbackManager;
     AccessToken facebookAccessToken;
@@ -45,6 +58,9 @@ public class SignInPage extends AppCompatActivity {
     Intent openHomeActivity;
     Bundle bundle = new Bundle();;
 
+    LoginDetailsDatabase db;
+    LoginDetails loginDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,33 +69,56 @@ public class SignInPage extends AppCompatActivity {
         signBtnGoogle = findViewById(R.id.imgGoogle);
         signBtnFacebook = findViewById(R.id.imgFacebook);
         btnSignUp = findViewById(R.id.btnSignUp);
+        btnLogin = findViewById(R.id.btnLogin);
+        editTextUsername = findViewById(R.id.editTextUserName);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        db = Room.databaseBuilder(getApplicationContext(),LoginDetailsDatabase.class,"LoginDetails.db").build();
+        LoginDetailsDao loginDetailsDao = db.loginDetailsDao();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+
+
+        btnSignUp.setOnClickListener((View view) -> {
                 startActivity(new Intent(SignInPage.this, SignUpPage.class));
                 finish();
-            }
+
+        });
+
+        //Local SignIn
+        btnLogin.setOnClickListener((View view) -> {
+            executorService.execute(() -> {
+                try {
+                    List<LoginDetails> AllLoginDetails = loginDetailsDao.GetAllLoginDetails();
+                    for(int i = 0 ; i < AllLoginDetails.size(); i++){
+                        if(AllLoginDetails.get(i).getUsername().equals(editTextUsername.getText().toString()) && AllLoginDetails.get(i).getPassword().equals(editTextPassword.getText().toString())){
+                            bundle.putString("SIGNINTYPE","Local");
+                            bundle.putString("FULLNAME",AllLoginDetails.get(i).getFullName());
+                            openHomeActivity = new Intent(SignInPage.this, HomeActivity.class);
+                            openHomeActivity.putExtras(bundle);
+                            startActivity(openHomeActivity);
+                            finish();
+                        }
+                    }
+                }catch (Exception ex){
+                    Log.d("DBDEMO", ex.getMessage());
+                }
+            });
+
         });
 
         //Facebook SignIn
         FacebookSignInSetup();
-        signBtnFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        signBtnFacebook.setOnClickListener((View view) -> {
                 LoginManager.getInstance().logInWithReadPermissions(SignInPage.this, Arrays.asList("public_profile"));
-            }
         });
-
 
         //Google SignIn
         GoogleSignInSetup();
-        signBtnGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        signBtnGoogle.setOnClickListener((View view) -> {
                 Intent signInIntent = googleSignInClient.getSignInIntent();
                 activityResultLauncher.launch(signInIntent);
-            }
+
         });
 
     }
@@ -95,7 +134,7 @@ public class SignInPage extends AppCompatActivity {
         facebookAccessToken = AccessToken.getCurrentAccessToken();
         if(facebookAccessToken!=null && !facebookAccessToken.isExpired()){
             bundle.putString("SIGNINTYPE","Facebook");
-            openHomeActivity = new Intent(SignInPage.this,HomeActivity.class);
+            openHomeActivity = new Intent(SignInPage.this, HomeActivity.class);
             openHomeActivity.putExtras(bundle);
             startActivity(openHomeActivity);
             finish();
