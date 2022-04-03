@@ -1,16 +1,29 @@
-package com.example.coffeeapp;
+package com.example.coffeeapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+
+
+import com.example.coffeeapp.databases.ProductDatabase;
+import com.example.coffeeapp.interfaces.ProductDao;
+import com.example.coffeeapp.models.Product;
+import com.example.coffeeapp.R;
+import com.example.coffeeapp.supplements.RecyclerItemClickListener;
+import com.example.coffeeapp.adapters.ProductAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CatalogActivity extends AppCompatActivity {
 
@@ -18,9 +31,11 @@ public class CatalogActivity extends AppCompatActivity {
     private RecyclerView teaRecyclerView;
 
     // Arraylist for storing data
-    private ArrayList<ProductModel> coffeeModelArrayList;
-    private ArrayList<ProductModel> teaModelArrayList;
+    private ArrayList<Product> coffeeModelArrayList;
+    private ArrayList<Product> teaModelArrayList;
 
+
+    ProductDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,17 +43,18 @@ public class CatalogActivity extends AppCompatActivity {
         coffeeRecyclerView = findViewById(R.id.idRVCoffee);
         teaRecyclerView = findViewById(R.id.idRVTea);
 
+
         // here we have created new array list and added data to it.
         coffeeModelArrayList = new ArrayList<>();
-        coffeeModelArrayList.add(new ProductModel("Cappuchino", 4, R.drawable.cappuchino));
-        coffeeModelArrayList.add(new ProductModel("Americano", 3, R.drawable.americano));
-        coffeeModelArrayList.add(new ProductModel("Latte", 4, R.drawable.latte));
-        coffeeModelArrayList.add(new ProductModel("Mocca", 4, R.drawable.mocca));
+        coffeeModelArrayList.add(new Product("Cappuchino", 4, R.drawable.cappuchino));
+        coffeeModelArrayList.add(new Product("Americano", 3, R.drawable.americano));
+        coffeeModelArrayList.add(new Product("Latte", 4, R.drawable.latte));
+        coffeeModelArrayList.add(new Product("Mocca", 4, R.drawable.mocca));
 
         teaModelArrayList = new ArrayList<>();
-        teaModelArrayList.add(new ProductModel("Green Tea", 4, R.drawable.greantea));
-        teaModelArrayList.add(new ProductModel("Matcha Latte", 4, R.drawable.matcha));
-        teaModelArrayList.add(new ProductModel("Chai", 4, R.drawable.chai));
+        teaModelArrayList.add(new Product("Green Tea", 4, R.drawable.greantea));
+        teaModelArrayList.add(new Product("Matcha Latte", 4, R.drawable.matcha));
+        teaModelArrayList.add(new Product("Chai", 4, R.drawable.chai));
 
 
         ProductAdapter courseAdapter = new ProductAdapter(this, coffeeModelArrayList);

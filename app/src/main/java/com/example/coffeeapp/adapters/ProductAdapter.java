@@ -1,4 +1,4 @@
-package com.example.coffeeapp;
+package com.example.coffeeapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,17 +8,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.coffeeapp.models.Product;
+import com.example.coffeeapp.R;
+
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewholder> {
 
     private Context context;
-    private ArrayList<ProductModel> productModelArrayList;
+    private ArrayList<Product> productArrayList;
 
     // Constructor
-    public ProductAdapter(Context context, ArrayList<ProductModel> courseModelArrayList) {
+    public ProductAdapter(Context context, ArrayList<Product> courseModelArrayList) {
         this.context = context;
-        this.productModelArrayList = courseModelArrayList;
+        this.productArrayList = courseModelArrayList;
     }
 
     @NonNull
@@ -32,7 +36,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.Viewholder holder, int position) {
         // to set data to textview and imageview of each card layout
-        ProductModel model = productModelArrayList.get(position);
+        Product model = productArrayList.get(position);
         holder.productNameTV.setText(model.getProduct_name());
         holder.productPriceIV.setText("" + model.getProduct_price());
         holder.productIV.setImageResource(model.getProduct_image());
@@ -40,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
 
     @Override
     public int getItemCount() {
-        return productModelArrayList.size();
+        return productArrayList.size();
     }
 
     // View holder class for initializing of
