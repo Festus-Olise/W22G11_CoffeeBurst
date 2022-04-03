@@ -1,14 +1,14 @@
-package com.example.coffeeapp;
+package com.example.coffeeapp.models;
 
 // Class to hold product title, image, and price
-public class ProductModel {
+public class Product {
 
     private String product_name;
     private int product_price;
     private int product_image;
 
     // Constructor
-    public ProductModel(String product_name, int course_rating, int course_image) {
+    public Product(String product_name, int course_rating, int course_image) {
         this.product_name = product_name;
         this.product_price = course_rating;
         this.product_image = course_image;

@@ -1,4 +1,4 @@
-package com.example.coffeeapp;
+package com.example.coffeeapp.supplements;
 
 import android.content.Context;
 import android.view.GestureDetector;
