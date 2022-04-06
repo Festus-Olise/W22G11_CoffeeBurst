@@ -14,7 +14,7 @@ import com.example.coffeeapp.R;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewholder> {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private Context context;
     private ArrayList<Product> productArrayList;
@@ -27,14 +27,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
 
     @NonNull
     @Override
-    public ProductAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for each item of recycler view.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        return new Viewholder(view);
+        return new ProductViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductAdapter.ProductViewHolder holder, int position) {
         // to set data to textview and imageview of each card layout
         Product model = productArrayList.get(position);
         holder.productNameTV.setText(model.getProduct_name());
@@ -49,11 +49,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
 
     // View holder class for initializing of
     // your views such as TextView and Imageview.
-    public class Viewholder extends RecyclerView.ViewHolder {
+    public class ProductViewHolder extends RecyclerView.ViewHolder {
         public ImageView productIV;
         public TextView productNameTV, productPriceIV, categoryCoffeeTV, categoryTeaTV;
 
-        public Viewholder(@NonNull View itemView) {
+        public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productIV = itemView.findViewById(R.id.idIVProductImage);
             productNameTV = itemView.findViewById(R.id.idTVProductName);

@@ -94,7 +94,7 @@ public class CatalogActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(this, coffeeRecyclerView,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         Intent intent = new Intent(CatalogActivity.this, ProductCardActivity.class);
-                        ProductAdapter.Viewholder mod = (ProductAdapter.Viewholder) coffeeRecyclerView.findViewHolderForAdapterPosition(position);
+                        ProductAdapter.ProductViewHolder mod = (ProductAdapter.ProductViewHolder) coffeeRecyclerView.findViewHolderForAdapterPosition(position);
                         String name = (String) Objects.requireNonNull(mod).productNameTV.getText();
                         intent.putExtra("name", name);
                         int imageId = Objects.requireNonNull(mod).productIV.getId();

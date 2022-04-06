@@ -26,6 +26,10 @@ public class Product {
     @ColumnInfo(name = "product_category")
     private String product_category;
 
+    //default constructor
+    public Product() {
+
+    }
 
     // Constructor
     public Product(@NonNull String product_code, String product_name, String product_category, double product_price,String product_image) {
