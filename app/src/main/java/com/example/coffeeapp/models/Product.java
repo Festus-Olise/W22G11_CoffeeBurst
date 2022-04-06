@@ -1,20 +1,50 @@
 package com.example.coffeeapp.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 // Class to hold product title, image, and price
+@Entity(tableName = "products")
 public class Product {
 
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "product_code")
+    private String product_code;
+
+    @ColumnInfo(name = "product_name")
     private String product_name;
-    private int product_price;
-    private int product_image;
+
+    @ColumnInfo(name = "product_price")
+    private double product_price;
+
+    @ColumnInfo(name = "product_image")
+    private String product_image;
+
+    @ColumnInfo(name = "product_category")
+    private String product_category;
+
 
     // Constructor
-    public Product(String product_name, int course_rating, int course_image) {
+    public Product(@NonNull String product_code, String product_name, String product_category, double product_price,String product_image) {
         this.product_name = product_name;
-        this.product_price = course_rating;
-        this.product_image = course_image;
+        this.product_image = product_image;
+        this.product_price = product_price;
+        this.product_code = product_code;
+        this.product_category = product_category;
     }
 
-    // Getter and Setter
+    @NonNull
+    public String getProduct_code() {
+        return product_code;
+    }
+
+    public void setProduct_code(@NonNull String product_code) {
+        this.product_code = product_code;
+    }
+
     public String getProduct_name() {
         return product_name;
     }
@@ -23,20 +53,28 @@ public class Product {
         this.product_name = product_name;
     }
 
-    public int getProduct_price() {
+    public double getProduct_price() {
         return product_price;
     }
 
-    public void setProduct_price(int product_price) {
+    public void setProduct_price(double product_price) {
         this.product_price = product_price;
     }
 
-    public int getProduct_image() {
+    public String getProduct_image() {
         return product_image;
     }
 
-    public void setProduct_image(int product_image) {
+    public void setProduct_image(String product_image) {
         this.product_image = product_image;
+    }
+
+    public String getProduct_category() {
+        return product_category;
+    }
+
+    public void setProduct_category(String product_category) {
+        this.product_category = product_category;
     }
 }
 
