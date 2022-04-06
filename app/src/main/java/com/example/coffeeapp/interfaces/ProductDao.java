@@ -14,12 +14,12 @@ public interface ProductDao {
     void insertProducts(Product... products);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long[] insertProductsFromList(List<Product> products);
+    void insertProductsFromList(List<Product> products);
 
     @Query("SELECT * from products")
     List<Product> GetAllProducts();
 
-    @Query("SELECT * FROM products WHERE catogory IN (:StudIds)")
-    List<Product> GetStudentsInfoFromIds(List<String> StudIds);
+    @Query("SELECT * FROM products WHERE product_category =:Category")
+    List<Product> GetProductsOfCategory(String Category);
 
 }

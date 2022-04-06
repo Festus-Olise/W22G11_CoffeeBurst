@@ -39,7 +39,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
         Product model = productArrayList.get(position);
         holder.productNameTV.setText(model.getProduct_name());
         holder.productPriceIV.setText("" + model.getProduct_price());
-        holder.productIV.setImageResource(model.getProduct_image());
+        holder.productIV.setImageResource(context.getResources().getIdentifier(model.getProduct_image() , "drawable", context.getPackageName()));
     }
 
     @Override
@@ -51,13 +51,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Viewhold
     // your views such as TextView and Imageview.
     public class Viewholder extends RecyclerView.ViewHolder {
         public ImageView productIV;
-        public TextView productNameTV, productPriceIV;
+        public TextView productNameTV, productPriceIV, categoryCoffeeTV, categoryTeaTV;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             productIV = itemView.findViewById(R.id.idIVProductImage);
             productNameTV = itemView.findViewById(R.id.idTVProductName);
             productPriceIV = itemView.findViewById(R.id.idTVProductPrice);
+            categoryCoffeeTV = itemView.findViewById(R.id.txtViewCoffeeCat);
+            categoryTeaTV = itemView.findViewById(R.id.txtViewTeaCat);
         }
     }
 }

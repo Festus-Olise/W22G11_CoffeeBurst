@@ -29,7 +29,7 @@
         <activity
             android:name=".activities.ProductCardActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:parentActivityName=".activities.CatalogActivity">
         </activity>
     </application>
 
